@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ReviewFilmes</string>
+    <string name="txtTitleMovie">Titulo</string>
+    <string name="txtDescriptionMovie">Sinopse</string>
+    <string name="txtImageMovie">URL Imagem</string>
+    <string name="register">Registrar</string>
+    <string name="txtNota">Nota</string>
+    <string name="alterar">Atualizar</string>
+</resources>

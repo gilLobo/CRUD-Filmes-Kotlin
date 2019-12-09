@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.reviewfilmesproject.FilmeDetalheActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_main_activity" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageDet"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_below="@id/toolbar"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/titleDet"
+        android:text="Titulo"
+        android:textSize="22sp"
+        android:textColor="#a9a9a9"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/imageDet"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/descricaoDet"
+        android:text="Descricao"
+        android:textSize="18sp"
+        android:textColor="#a9a9a9"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/titleDet"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/notaDet"
+        android:text="Nota"
+        android:textSize="18sp"
+        android:textColor="#a9a9a9"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/descricaoDet"
+        />
+
+</RelativeLayout>
