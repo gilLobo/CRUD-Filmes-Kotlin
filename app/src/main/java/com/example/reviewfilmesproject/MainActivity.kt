@@ -42,8 +42,6 @@ class MainActivity : AppCompatActivity() {
 
         // Retornando lista de filmes da API ROOM
         listFilmes = listarTodos()
-        // Adicionando ao reciclerview
-        configureList(listFilmes)
 
         fabRegister.setOnClickListener{
             var i = Intent(MainActivity@this, RegistrarFilmeActivity::class.java)
@@ -52,13 +50,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-//        Log.e("MainActivity", "onResume")
-//        recycleViewFilme = findViewById(R.id.recyclerView)
-//        listFilmes = listarTodos()
-//        Log.e("MainActivity", "listFilmes: "+ listFilmes.toString())
-//        configureList(listFilmes)
+    override fun onStart() {
+        super.onStart()
+        listarTodos()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -86,28 +80,23 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun configureList(filmes: ArrayList<Filme>) {
-        Log.e("MainActivity", "Inicio listarTodos!")
+    fun configureListInReciclerView(filmes: ArrayList<Filme>) {
         recycleViewFilme.adapter = AdapterFilme(this@MainActivity, filmes)
         recycleViewFilme.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
 
     open fun listarTodos():ArrayList<Filme> {
         var lista = ArrayList<Filme>()
-        Log.e("MainActivity", "Inicio listarTodos!")
         doAsync {
             var filmes = FilmeService.listarTodas()
-            Log.e("MainActivity", "Inicio doAsync!")
-
             uiThread {
                 for (filme in filmes) {
                     lista.add(filme)
-                    //deletar(filme)
-                    Log.e("MainActivity", "Filme: " + filme.toString())
                 }
+                configureListInReciclerView(lista)
+                recycleViewFilme.adapter!!.notifyDataSetChanged()
             }
         }
-        TimeUnit.SECONDS.sleep(1L)
         return lista
     }
 }

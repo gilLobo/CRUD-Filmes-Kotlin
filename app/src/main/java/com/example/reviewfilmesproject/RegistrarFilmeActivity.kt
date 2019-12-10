@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.example.reviewfilmesproject.Model.Filme
 import com.example.reviewfilmesproject.Service.FilmeService
@@ -25,7 +26,6 @@ class RegistrarFilmeActivity : AppCompatActivity() {
     lateinit var edtURLImage: EditText
     lateinit var edtNota: EditText
     lateinit var btnRegister: Button
-    lateinit var btnEditar: Button
     var filme : Filme? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,19 +44,24 @@ class RegistrarFilmeActivity : AppCompatActivity() {
         edtNota = findViewById(R.id.edtNota)
         btnRegister = findViewById(R.id.btnRegistrar)
 
+
         btnRegister.setOnClickListener {
             var filme = Filme()
             filme.urlImagem = edtURLImage.text.toString()
             filme.titulo = edtTitle.text.toString()
             filme.sinopse = edtDescription.text.toString()
             filme.nota = edtNota.text.toString().toDouble()
-            inserir(filme)
-
-            var i = Intent()
-            i.putExtra("filme", filme)
-            setResult(RESULT_CODE_REGISTER, i)
-            finish()
+            if (edtNota.text.toString().toDouble() >= 0 && edtNota.text.toString().toDouble() <= 5) {
+                inserir(filme)
+                var i = Intent()
+                i.putExtra("filme", filme)
+                setResult(RESULT_CODE_REGISTER, i)
+                finish()
+            } else {
+                Toast.makeText(RegistrarFilmeActivity@this, "Nota deve ser entre 0 e 5.", Toast.LENGTH_LONG).show()
+            }
         }
+
 
 
     }
@@ -71,7 +76,6 @@ class RegistrarFilmeActivity : AppCompatActivity() {
     open fun inserir(filme: Filme){
 
         doAsync {
-            Log.e("DAO-Filme", "Inserir doAsync")
             FilmeService.inserir(filme)
             uiThread {
                 Log.e("DAO-Filme", "Inserir uiThread")

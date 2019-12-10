@@ -53,6 +53,7 @@ class FilmeAtualizarActivity : AppCompatActivity() {
             edtDescription.setText(filmeEdit!!.sinopse)
             edtNota.setText(filmeEdit!!.nota.toString())
 
+
             btnEditar.setOnClickListener {
 
                 var filme = Filme()
@@ -60,12 +61,17 @@ class FilmeAtualizarActivity : AppCompatActivity() {
                 filme.titulo = edtTitle.text.toString()
                 filme.sinopse = edtDescription.text.toString()
                 filme.nota = edtNota.text.toString().toDouble()
-                atualizar(filme)
-                var i = Intent()
-                i.putExtra("filme", filme)
-                setResult(RegistrarFilmeActivity.RESULT_CODE_REGISTER, i)
-                finish()
+                if (edtNota.text.toString().toDouble() >= 0 && edtNota.text.toString().toDouble() <= 5) {
+                    atualizar(filme)
+                    var i = Intent()
+                    i.putExtra("filme", filme)
+                    setResult(RegistrarFilmeActivity.RESULT_CODE_REGISTER, i)
+                    finish()
+                } else {
+                    Toast.makeText(FilmeAtualizarActivity@this, "Nota deve ser entre 0 e 5.", Toast.LENGTH_LONG).show()
+                }
             }
+
 
         }else{
             Log.e("FilmeAtualizarActivity", "Erro ao retornar filme")
@@ -73,10 +79,7 @@ class FilmeAtualizarActivity : AppCompatActivity() {
     }
 
     open fun atualizar(filme: Filme){
-        Toast.makeText(FilmeDetalheActivity@this, "filme: " + filme.toString(), Toast.LENGTH_LONG).show()
-        Log.e("DAO-Filme", "Atualizar Filme")
         doAsync {
-            Log.e("DAO-Filme", "doAsync")
             filmeEdit?.let { FilmeService.deletar(it) }
             FilmeService.inserir(filme)
 
